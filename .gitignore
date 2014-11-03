@@ -1,57 +1,23 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
+# Ignore bundler config.
+/.bundle
 
-# C extensions
-*.so
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
 
-# Distribution / packaging
-.Python
-env/
-bin/
-build/
-develop-eggs/
-dist/
-eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-.cache
-nosetests.xml
-coverage.xml
-
-# Translations
-*.mo
-
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
-
-# Rope
-.ropeproject
-
-# Django stuff:
-*.log
-*.pot
-
-# Sphinx documentation
-docs/_build/
-
-# Text editor files
-*~
+# Ignore other unneeded files.
+database.yml
+doc/
 *.swp
+*~
+.project
+.DS_Store
+.idea
+.secret
+bundler_stubs/
+.settings/
+nohup.out
