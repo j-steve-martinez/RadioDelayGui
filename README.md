@@ -1,4 +1,4 @@
-Sports Radio Delay
+Radio Delay Gui
 ==============================
 
 Python tool to delay radio (or any generic audio input)
@@ -7,7 +7,11 @@ Python tool to delay radio (or any generic audio input)
 
 RADIO >> AUDIO CABLE >> PC >> (OPTIONAL) AUDIO CABLE >> (OPTIONAL) SPEAKERS
 
-Run radioDelay.py and adjust delay as appropriate.
+Ubuntu:
+  nohup ./radioDelayGui.pyw &
+
+Windows
+  Double click radioDelayGui.pyw
 
 ## Why?
 

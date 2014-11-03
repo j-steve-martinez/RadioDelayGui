@@ -1,18 +1,12 @@
 #!/usr/bin/python
-#name           :radiodelaygui.pyw
-#description    :A script to delay the audio input for a device such as a radio
+#name           :radioDelayGui.pyw
+#description    :A script to delay the audio input from a device such as a radio
 #author         :J. Steve Martinez - j.steve.martinez@gmail.com
 #date           :20141102
 #version        :v.1    
-#usage          :./radiodelaygui.pyw
+#usage          :./radioDelayGui.pyw
 #notes          :       
 #Python         :2.7.6
-#============================================================================
-#'RadioDelay (aka Verne-Be-Gone)\n'
-#'Copyright (C) 2014  Steven Young <stevenryoung@gmail.com>\n'
-#'This program comes with ABSOLUTELY NO WARRANTY.\n'
-#'This is free software, and you are welcome to redistribute it\n'
-#'under certain conditions; type "show details" for more info\n')
 #============================================================================
 from Tkinter import *
 import pyaudio
@@ -26,7 +20,6 @@ WIDTH = 2
 
 class Gui:
     def __init__(self, master, endCommand, getCommand):
-        #self.queue = queue
         # Set up the GUI
         self.button1 = Button(master, text='Quit', background="red", command=endCommand)
         self.button1.pack(side=LEFT)
