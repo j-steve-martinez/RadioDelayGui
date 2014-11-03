@@ -20,23 +20,39 @@ WIDTH = 2
 
 class Gui:
     def __init__(self, master, endCommand, getCommand):
-        # Set up the GUI
-        self.button1 = Button(master, text='Quit', background="red", command=endCommand)
-        self.button1.pack(side=LEFT)
+        self.myParent = master
         
-        self.button2 = Button(master, text='Set Delay', background="green", command=getCommand)
-        self.button2.pack(side=LEFT)
+        # Set the default close
+        self.myParent.protocol('WM_DELETE_WINDOW',endCommand)
+        
+        # Setup the GUI 
+        self.myContainer1 = Frame(master)
+        self.myContainer1.pack(expand=YES, fill=BOTH)
+        
+        self.control_frame1 = Frame(self.myContainer1)
+        self.control_frame1.pack(side=TOP, expand=NO, padx=10, pady=5, ipadx=5, ipady=5)      
+
+        self.control_frame2 = Frame(self.myContainer1)
+        self.control_frame2.pack(side=TOP, expand=NO, padx=10, pady=5, ipadx=5, ipady=5)
+
+        self.button1 = Button(self.control_frame2, text='Quit', background="red", command=endCommand)
+        self.button1.pack(side=LEFT)      
          
         value = StringVar()
-        self.entry = Entry(master, textvariable=value)
-        self.entry.pack(side=LEFT)
-        value.set(.01)
+        self.entry = Entry(self.control_frame2, textvariable=value)
+        self.entry.config(width=5, relief=RIDGE)
+        self.entry.focus_force()
+        self.entry.pack(side=RIGHT, padx=5, pady=5, ipadx=5, ipady=5)
+        #value.set(.01)
+        
+        self.button2 = Button(self.control_frame2, text='Set Delay', background="green", command=getCommand)
+        self.button2.pack(side=RIGHT)
         
         self.gui_msg = StringVar()
-        self.msglabel = Label(master, textvariable=self.gui_msg)
+        self.msglabel = Label(self.control_frame1, textvariable=self.gui_msg)
         self.msglabel.pack(side=LEFT)
 
-        self.gui_msg.set("Enter a value greater than zero (0)")
+        self.gui_msg.set("Enter a value greater than zero (0):")
 
 class AudioDelay:
     def __init__(self, master):
@@ -45,7 +61,7 @@ class AudioDelay:
 
         # Set up the GUI part
         self.gui = Gui(master, self.endApplication, self.getPconn1)
-
+        
         #start the delay
         self.run()
 
