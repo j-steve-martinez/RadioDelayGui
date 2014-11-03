@@ -8,7 +8,7 @@ This is a fork from the [Radio Delay](https://github.com/stevenryoung/RadioDelay
 
 Python tool to delay radio (or any generic audio input)
 
-![alt text](https://github.com/j-steve-martinez/RadioDelayGui/images/dadioDelayGui.png "Radio Delay Gui")
+<img src="https://github.com/j-steve-martinez/RadioDelayGui/blob/master/images/radioDelayGui.png" alt="Radio Delay Gui"/>
 
 ## When
 Use it when you meet these requirements:
