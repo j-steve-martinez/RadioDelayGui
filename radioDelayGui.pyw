@@ -19,14 +19,19 @@ CHUNK = 2048
 WIDTH = 2
 
 class Gui:
-    def __init__(self, master, endCommand, getCommand):
+    def __init__(self, master, audio):
         self.myParent = master
-        
+        self.audio = audio
+        self.setGui()
+        self.audio.run()
+
+    def setGui(self):
+        self.myParent.title("Welcome to Radio Delay GUI")    
         # Set the default close
-        self.myParent.protocol('WM_DELETE_WINDOW',endCommand)
+        self.myParent.protocol('WM_DELETE_WINDOW', self.endCommand)
         
         # Setup the GUI 
-        self.myContainer1 = Frame(master)
+        self.myContainer1 = Frame(self.myParent)
         self.myContainer1.pack(expand=YES, fill=BOTH)
         
         self.control_frame1 = Frame(self.myContainer1)
@@ -35,7 +40,7 @@ class Gui:
         self.control_frame2 = Frame(self.myContainer1)
         self.control_frame2.pack(side=TOP, expand=NO, padx=10, pady=5, ipadx=5, ipady=5)
 
-        self.button1 = Button(self.control_frame2, text='Quit', background="red", command=endCommand)
+        self.button1 = Button(self.control_frame2, text='Quit', background="red", command=self.endCommand)
         self.button1.pack(side=LEFT)      
          
         value = StringVar()
@@ -43,9 +48,9 @@ class Gui:
         self.entry.config(width=5, relief=RIDGE)
         self.entry.focus_force()
         self.entry.pack(side=RIGHT, padx=5, pady=5, ipadx=5, ipady=5)
-        #value.set(.01)
+        value.set(5)
         
-        self.button2 = Button(self.control_frame2, text='Set Delay', background="green", command=getCommand)
+        self.button2 = Button(self.control_frame2, text='Set Delay', background="green", command=self.getCommand)
         self.button2.pack(side=RIGHT)
         
         self.gui_msg = StringVar()
@@ -54,16 +59,21 @@ class Gui:
 
         self.gui_msg.set("Enter a value greater than zero (0):")
 
-class AudioDelay:
-    def __init__(self, master):
-        #self.msg = ""
-        self.master = master
+    def endCommand(self):
+        self.audio.endApplication()
 
-        # Set up the GUI part
-        self.gui = Gui(master, self.endApplication, self.getPconn1)
-        
-        #start the delay
-        self.run()
+    def getCommand(self):
+        self.val = self.entry.get()
+        self.inp = float(self.val)
+        if self.inp > 0:
+            self.audio.setPconn1(self.inp)
+            self.msglabel.configure(fg = "black")
+        else:
+            self.msglabel.configure(fg = "red")
+
+class AudioDelay:
+    def __init__(self):
+        self.msg = "_init_"
 
     def delay_loop(self, channels=2, filename='default.wav', conn=[]):
     
@@ -138,21 +148,15 @@ class AudioDelay:
                     stream.close()
                     break
     
-
     def run(self):
         # Establish pipe for delay process
         self.pconn1, self.cconn1 = Pipe()
         self.p1 = Process(target=self.delay_loop, args=(2,'default.wav',self.cconn1))
         self.p1.start()
         
-    def getPconn1(self):
+    def setPconn1(self, value):
         #update the delay
-        self.inp = float(self.gui.entry.get())
-        if self.inp > 0:
-            self.pconn1.send(self.inp)
-            self.gui.msglabel.configure(fg = "black")
-        else:
-            self.gui.msglabel.configure(fg = "red")
+        self.pconn1.send(float(value))
 
     def endApplication(self):
         #send the loop the exit call and clean up
@@ -160,8 +164,8 @@ class AudioDelay:
         self.p1.join()
         sys.exit(1)
 
-root = Tk()
-KNBR = AudioDelay(master=root)
-KNBR.master.title("Welcome to Radio Delay GUI")
-root.mainloop()
-root.withdraw()
+if __name__ == '__main__':
+    root = Tk()
+    audio = AudioDelay()
+    knbr = Gui(root, audio)
+    root.mainloop()
